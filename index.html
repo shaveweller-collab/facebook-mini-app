@@ -1,1 +1,504 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      color: #1c1e21;
+      padding-bottom: 70px;
+    }
+
+    .topbar {
+      background: #ffffff;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 1px 4px #ccc;
+    }
+
+    .logo {
+      font-size: 25px;
+      font-weight: bold;
+      color: #1877f2;
+      margin-right: 15px;
+    }
+
+    .search {
+      flex: 1;
+      background: #f0f2f5;
+      border-radius: 25px;
+      padding: 11px 15px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .profile {
+      background: white;
+      margin-bottom: 10px;
+      padding-bottom: 15px;
+    }
+
+    .cover {
+      height: 150px;
+      background: linear-gradient(135deg, #1877f2, #6c5ce7);
+    }
+
+    .profile-info {
+      padding: 0 18px;
+      margin-top: -35px;
+    }
+
+    .avatar {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      background: #1877f2;
+      border: 4px solid white;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .name {
+      font-size: 21px;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+    .bio {
+      color: #65676b;
+      margin-top: 5px;
+    }
+
+    .composer {
+      background: white;
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+
+    .composer-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .small-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #1877f2;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .post-input {
+      flex: 1;
+      background: #f0f2f5;
+      border: none;
+      border-radius: 22px;
+      padding: 13px 16px;
+      outline: none;
+    }
+
+    .post-button {
+      width: 100%;
+      margin-top: 12px;
+      background: #1877f2;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 7px;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .post {
+      background: white;
+      margin-bottom: 10px;
+      padding: 15px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .post-name {
+      font-weight: bold;
+    }
+
+    .post-time {
+      color: #65676b;
+      font-size: 12px;
+      margin-top: 3px;
+    }
+
+    .post-text {
+      margin: 15px 0;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    .actions {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding-top: 8px;
+      gap: 5px;
+    }
+
+    .action {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 9px;
+      font-size: 14px;
+      color: #65676b;
+      border-radius: 6px;
+    }
+
+    .action:hover {
+      background: #f0f2f5;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: white;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -1px 5px #ccc;
+      z-index: 20;
+    }
+
+    .nav-button {
+      background: none;
+      border: none;
+      font-size: 23px;
+      color: #65676b;
+    }
+
+    .nav-button.active {
+      color: #1877f2;
+    }
+
+    .section {
+      padding: 15px;
+      background: white;
+      margin-bottom: 10px;
+    }
+
+    .section h2 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 500px) {
+      .topbar {
+        height: 55px;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="logo">Connect</div>
+    <input class="search" id="searchInput" placeholder="Search people...">
+  </div>
+
+  <main class="container">
+
+    <section class="profile">
+      <div class="cover"></div>
+
+      <div class="profile-info">
+        <div class="avatar">Y</div>
+        <div class="name">Your Profile</div>
+        <div class="bio">Welcome to Connect 👋</div>
+      </div>
+    </section>
+
+    <section class="composer">
+      <div class="composer-row">
+        <div class="small-avatar">Y</div>
+        <input
+          class="post-input"
+          id="postInput"
+          placeholder="What's on your mind?"
+        >
+      </div>
+
+      <button class="post-button" onclick="createPost()">
+        Post
+      </button>
+    </section>
+
+    <div id="feed">
+
+      <article class="post">
+        <div class="post-header">
+          <div class="small-avatar">A</div>
+
+          <div>
+            <div class="post-name">Alex</div>
+            <div class="post-time">Just now</div>
+          </div>
+        </div>
+
+        <div class="post-text">
+          Welcome to Connect! 🎉
+          This is your new social network inside Telegram.
+        </div>
+
+        <div class="actions">
+          <button class="action" onclick="likePost(this)">
+            👍 Like
+          </button>
+
+          <button class="action" onclick="commentPost()">
+            💬 Comment
+          </button>
+
+          <button class="action" onclick="sharePost()">
+            ↗️ Share
+          </button>
+        </div>
+      </article>
+
+      <article class="post">
+        <div class="post-header">
+          <div class="small-avatar">J</div>
+
+          <div>
+            <div class="post-name">Jamie</div>
+            <div class="post-time">5 min ago</div>
+          </div>
+        </div>
+
+        <div class="post-text">
+          Nice to see everyone here. 👋
+        </div>
+
+        <div class="actions">
+          <button class="action" onclick="likePost(this)">
+            👍 Like
+          </button>
+
+          <button class="action" onclick="commentPost()">
+            💬 Comment
+          </button>
+
+          <button class="action" onclick="sharePost()">
+            ↗️ Share
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+    <section id="people" class="section hidden">
+      <h2>People</h2>
+      <p>Search for people and connect with them.</p>
+    </section>
+
+    <section id="messages" class="section hidden">
+      <h2>Messages</h2>
+      <p>Your conversations will appear here.</p>
+    </section>
+
+    <section id="notifications" class="section hidden">
+      <h2>Notifications</h2>
+      <p>Your notifications will appear here.</p>
+    </section>
+
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-button active" onclick="showHome()">🏠</button>
+    <button class="nav-button" onclick="showPeople()">👥</button>
+    <button class="nav-button" onclick="showMessages()">💬</button>
+    <button class="nav-button" onclick="showNotifications()">🔔</button>
+    <button class="nav-button" onclick="showProfile()">👤</button>
+  </nav>
+
+  <script>
+    const tg = window.Telegram && window.Telegram.WebApp;
+
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
+    function createPost() {
+      const input = document.getElementById("postInput");
+      const text = input.value.trim();
+
+      if (!text) {
+        alert("Write something first.");
+        return;
+      }
+
+      const post = document.createElement("article");
+      post.className = "post";
+
+      post.innerHTML = `
+        <div class="post-header">
+          <div class="small-avatar">Y</div>
+          <div>
+            <div class="post-name">You</div>
+            <div class="post-time">Just now</div>
+          </div>
+        </div>
+
+        <div class="post-text">${escapeHtml(text)}</div>
+
+        <div class="actions">
+          <button class="action" onclick="likePost(this)">
+            👍 Like
+          </button>
+
+          <button class="action" onclick="commentPost()">
+            💬 Comment
+          </button>
+
+          <button class="action" onclick="sharePost()">
+            ↗️ Share
+          </button>
+        </div>
+      `;
+
+      document.getElementById("feed").prepend(post);
+      input.value = "";
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function likePost(button) {
+      if (button.innerText.includes("Like")) {
+        button.innerText = "❤️ Liked";
+      } else {
+        button.innerText = "👍 Like";
+      }
+    }
+
+    function commentPost() {
+      const comment = prompt("Write a comment:");
+
+      if (comment) {
+        alert("Comment added: " + comment);
+      }
+    }
+
+    function sharePost() {
+      if (navigator.share) {
+        navigator.share({
+          title: "Connect",
+          text: "Check out this post on Connect!"
+        });
+      } else {
+        alert("Post ready to share!");
+      }
+    }
+
+    function hideSections() {
+      document.getElementById("people").classList.add("hidden");
+      document.getElementById("messages").classList.add("hidden");
+      document.getElementById("notifications").classList.add("hidden");
+      document.getElementById("feed").style.display = "block";
+    }
+
+    function showHome() {
+      hideSections();
+    }
+
+    function showPeople() {
+      hideSections();
+      document.getElementById("feed").style.display = "none";
+      document.getElementById("people").classList.remove("hidden");
+    }
+
+    function showMessages() {
+      hideSections();
+      document.getElementById("feed").style.display = "none";
+      document.getElementById("messages").classList.remove("hidden");
+    }
+
+    function showNotifications() {
+      hideSections();
+      document.getElementById("feed").style.display = "none";
+      document.getElementById("notifications").classList.remove("hidden");
+    }
+
+    function showProfile() {
+      hideSections();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    document.getElementById("searchInput").addEventListener("input", function() {
+      const value = this.value.toLowerCase();
+
+      document.querySelectorAll(".post").forEach(post => {
+        const text = post.innerText.toLowerCase();
+
+        if (text.includes(value)) {
+          post.style.display = "block";
+        } else {
+          post.style.display = "none";
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
